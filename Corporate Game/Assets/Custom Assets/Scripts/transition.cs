@@ -11,7 +11,8 @@ public class transition : MonoBehaviour {
 
 	void OnTriggerStay(){
 		if (Input.GetKeyDown (KeyCode.E)) {
-			transition_manager.instance.transition (transition_number, gameObject);	
+            print("kk");
+            transition_manager.instance.transition (transition_number, gameObject);	
 		}
 			
 
