@@ -141,6 +141,7 @@ public class ui_manager : MonoBehaviour {
     {
 		if (transition_collider.name == "spring_transition")
         {
+            print("spring transition");
 			if (Input.GetKeyDown (KeyCode.E))
             {
 				water_bottle_ui.GetComponent<Image> ().enabled = true;
