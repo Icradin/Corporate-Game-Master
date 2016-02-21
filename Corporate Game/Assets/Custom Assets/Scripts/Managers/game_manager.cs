@@ -11,7 +11,7 @@ public class game_manager : MonoBehaviour {
         {
             if (_instance == null)
             {
-                _instance = new GameObject("Game Manager").AddComponent<game_manager>();
+                _instance = new GameObject("GameManager").AddComponent<game_manager>();
                 _instance.tag = "GameManager";
             }
             return _instance;
@@ -37,6 +37,9 @@ public class game_manager : MonoBehaviour {
             return _player;
         }
     }
+
+
+
     public bool gotDuctTape = false;
     void Awake()
     {

@@ -7,7 +7,7 @@ public class cursor_test_class : MonoBehaviour {
 
     void Start()
     {
-		ToggleCursorState();
+		//ToggleCursorState();
        
     }
 

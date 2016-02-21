@@ -30,9 +30,9 @@ public class scene_manager : MonoBehaviour {
             Cursor.visible = true;
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
 
      
 

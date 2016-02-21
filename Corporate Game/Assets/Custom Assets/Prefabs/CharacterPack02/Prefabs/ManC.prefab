@@ -309,6 +309,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 400040}
   - 111: {fileID: 11100000}
+  - 65: {fileID: 6544708}
+  - 95: {fileID: 9594326}
+  - 114: {fileID: 11412544}
   m_Layer: 0
   m_Name: ManC
   m_TagString: Untagged
@@ -1289,6 +1292,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400170}
   - 137: {fileID: 13700000}
+  - 64: {fileID: 6407852}
   m_Layer: 0
   m_Name: ManC BODY
   m_TagString: Untagged
@@ -1642,9 +1646,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100040}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: -0.9998994, z: 0, w: -0.014184441}
+  m_LocalPosition: {x: -2.8130293, y: -5.876434, z: 6.236313}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 400002}
   - {fileID: 400170}
@@ -2637,6 +2641,47 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100140}
   m_Mesh: {fileID: 4300004, guid: 4078d61f0db503b44a342f0a3fb68e6a, type: 3}
+--- !u!64 &6407852
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100170}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 0}
+--- !u!65 &6544708
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100040}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 3, z: 0.5}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!95 &9594326
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100040}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!111 &11100000
 Animation:
   m_ObjectHideFlags: 1
@@ -2651,8 +2696,62 @@ Animation:
   - {fileID: 7400000, guid: 91b800c7a09533540b7ba56566c36cc5, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_CullingType: 0
+--- !u!114 &11412544
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e93b18265e9de044b7e5351b362cbeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  talk_to_david: {fileID: 0}
+  tent_collider: {fileID: 0}
+  water_collider: {fileID: 0}
+  dirty_water_collider: {fileID: 0}
+  fruit_collider: {fileID: 0}
+  fish_collider: {fileID: 0}
+  oil_collider: {fileID: 0}
+  camp_fire: {fileID: 0}
+  talk_button: {fileID: 0}
+  map_button: {fileID: 0}
+  daily_tasks_button: {fileID: 0}
+  goodbye_button: {fileID: 0}
+  back_button: {fileID: 0}
+  what_happened_button: {fileID: 0}
+  survive_button: {fileID: 0}
+  dt_explanation_button: {fileID: 0}
+  give_water: {fileID: 0}
+  give_fruit: {fileID: 0}
+  give_fish: {fileID: 0}
+  give_oil: {fileID: 0}
+  give_dirty_water: {fileID: 0}
+  got_dirty_water: 0
+  got_water: 0
+  got_fruit: 0
+  got_fish: 0
+  got_oil: 0
+  inventory_water: {fileID: 0}
+  inventory_fruit: {fileID: 0}
+  inventory_fish: {fileID: 0}
+  inventory_oil: {fileID: 0}
+  map_1: {fileID: 0}
+  map_2: {fileID: 0}
+  map_3: {fileID: 0}
+  map_4: {fileID: 0}
+  morning_skybox: {fileID: 2100000, guid: 63466e40190c1ef41986b06cefa9d9dd, type: 2}
+  day_skybox: {fileID: 2100000, guid: 65426a973da63d8409c65210706b469a, type: 2}
+  afternoon_skybox: {fileID: 2100000, guid: 10113df37ade1cb43a6b09da79bdada0, type: 2}
+  night_skybox: {fileID: 2100000, guid: f319543d7857fbf4eb37d8d5282efd3c, type: 2}
+  main_light: {fileID: 0}
+  night_light: {fileID: 0}
+  call_cursor_test: {fileID: 0}
+  fire_place_ON: 0
 --- !u!137 &13700000
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

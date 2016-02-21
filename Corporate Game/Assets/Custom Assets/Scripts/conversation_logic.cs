@@ -32,8 +32,7 @@ public class conversation_logic : MonoBehaviour {
    
     private bool enable_daily_tasks = false, given_oil;
     
-    //references cursor test script
-    public cursor_test_class call_cursor_test;
+  
 
     private ui_manager ui_manager;
 
@@ -50,7 +49,7 @@ public class conversation_logic : MonoBehaviour {
         inventory_fish = inventory_fish.GetComponent<Image>();
         inventory_oil = inventory_oil.GetComponent<Image>();
 
-        ParticleSystem camp_particles = camp_fire.GetComponent<ParticleSystem>();
+       // ParticleSystem camp_particles = camp_fire.GetComponent<ParticleSystem>();
         
         //camp_fire.GetComponent<ParticleSystem>() = false;
     }
