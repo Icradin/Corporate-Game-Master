@@ -3,7 +3,6 @@ using System.Collections;
 
 public class game_manager : MonoBehaviour {
 
-
     //Singleton for game manager.
     private static game_manager _instance;
     public static game_manager Instance
@@ -26,24 +25,43 @@ public class game_manager : MonoBehaviour {
         set { current_state = value; }
     }
 
-
+    public pause_menu_manager pause_menu;
+    public scene_manager scene_manager;
+    private GameObject _player;
+    public GameObject Player
+    {
+        get
+        {
+            if (_player == null)
+                _player = GameObject.FindGameObjectWithTag("player");
+            return _player;
+        }
+    }
     public bool gotDuctTape = false;
     void Awake()
     {
-        
+
         if (Application.loadedLevel != 0)
+        {
             current_state = GameState.InGame;
-        
+            FindRefferenceToGameObject();
+        }  
 
     }
 
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    void OnLevelWasLoaded()
+    {
+        if(current_state == GameState.InGame)
+        {
+            FindRefferenceToGameObject();
+        }
+
+    }
+
+    void FindRefferenceToGameObject()
+    {
+        pause_menu = FindObjectOfType<pause_menu_manager>();
+        scene_manager = FindObjectOfType<scene_manager>();
+    }
 }

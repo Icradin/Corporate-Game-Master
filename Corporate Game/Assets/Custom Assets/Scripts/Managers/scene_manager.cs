@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
+
 public enum GameState
 {
-    Menu, InGame, Paused
+    Menu, InGame, Paused, TalkingWithDavid
 }
 public class scene_manager : MonoBehaviour {
   
@@ -16,10 +18,24 @@ public class scene_manager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         currentState = game_manager.Instance.Current_State;
+
+        if (currentState == GameState.InGame)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        if (currentState == GameState.Menu)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+     
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             switch (currentState)
@@ -52,14 +68,19 @@ public class scene_manager : MonoBehaviour {
             case GameState.InGame:
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
-                //Time.timeScale = 1; //reset time scale
+                Time.timeScale = 1; //reset time scale
                 break;
             case GameState.Paused:
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
-                //   Time.timeScale = 0; // stop ime when paused.
-                //   activate pause menu
+                Time.timeScale = 0; // stop ime when paused.
+                game_manager.Instance.pause_menu.ActivatePauseMenu();
+                game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = false;
 
+                break;
+            case GameState.TalkingWithDavid:
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 break;
         }
         currentState = newGameState;
@@ -76,13 +97,17 @@ public class scene_manager : MonoBehaviour {
             case GameState.InGame:
                 break;
             case GameState.Paused:
-              //deactivat pause menu ???
+                game_manager.Instance.pause_menu.DeactivatePauseMenu();
+                game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = true;
                 break;
         }
     }
 
 
-
+    public void UnpauseGame()
+    {
+        SetState(GameState.InGame);
+    }
 
     public void SwitchToLevel(int index)
     {
@@ -102,6 +127,16 @@ public class scene_manager : MonoBehaviour {
     {
         print("Application shut down !!");
         Application.Quit();
+    }
+
+    public void TalkToDavid()
+    {
+        SetState(GameState.TalkingWithDavid);
+    }
+
+    public void GoodbyeDavid()
+    {
+        SetState(GameState.InGame);
     }
 }
 

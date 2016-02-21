@@ -401,8 +401,10 @@ public class conversation_logic : MonoBehaviour {
     public void GoodBye()
     {
         this.gameObject.GetComponent<BoxCollider>().enabled = true;
-        call_cursor_test.ToggleCursorState();
-        player.GetComponent<FirstPersonController>().enabled = true;
+        //call_cursor_test.ToggleCursorState();
+        game_manager.Instance.scene_manager.GoodbyeDavid();
+      
+        game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = true;
 
         talk_button.GetComponent<Image>().enabled = false;
         talk_button.GetComponent<Button>().enabled = false;
@@ -484,13 +486,17 @@ public class conversation_logic : MonoBehaviour {
             this.gameObject.GetComponent<BoxCollider>().enabled = false;
 
             //toggles cursor off
-            call_cursor_test.ToggleCursorState();
-
+            // call_cursor_test.ToggleCursorState();
+            game_manager.Instance.scene_manager.TalkToDavid();
+            game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = false;
             //disables player movement and mouselook
-            player.GetComponent<FirstPersonController>().enabled = false;
+            //  player.GetComponent<FirstPersonController>().enabled = false;
+
+
+
 
             //enables main conversation buttons
-			talk_button.GetComponent<Image> ().enabled = true;
+            talk_button.GetComponent<Image> ().enabled = true;
             talk_button.GetComponent<Button>().enabled = true;
 
 			map_button.GetComponent<Image> ().enabled = true;
