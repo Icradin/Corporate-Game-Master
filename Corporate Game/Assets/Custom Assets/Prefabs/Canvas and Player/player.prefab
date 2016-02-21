@@ -35,6 +35,7 @@ GameObject:
   - 143: {fileID: 14333382}
   - 114: {fileID: 11421602}
   - 114: {fileID: 11488902}
+  - 114: {fileID: 11452762}
   m_Layer: 0
   m_Name: player
   m_TagString: player
@@ -254,6 +255,21 @@ MonoBehaviour:
   hydration_bar: {fileID: 0}
   hunger_bar: {fileID: 0}
   moralle_bar: {fileID: 0}
+--- !u!114 &11452762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7851ad57b9ac6d499c4df55b1688579, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  hydration: 3
+  hunger: 3
+  morale: 3
 --- !u!114 &11475458
 MonoBehaviour:
   m_ObjectHideFlags: 1

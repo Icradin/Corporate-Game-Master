@@ -10,6 +10,7 @@ TagManager:
   - camp
   - transition
   - Fire
+  - GameManager
   layers:
   - Default
   - TransparentFX

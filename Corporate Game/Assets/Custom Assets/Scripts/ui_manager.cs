@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class ui_manager : MonoBehaviour {
 
+    player_stats player_stats;
+
 	public GameObject spring_text;
 	public GameObject fruit_text;
 	public GameObject fishing_text;
@@ -31,7 +33,11 @@ public class ui_manager : MonoBehaviour {
     public Image hydration_bar;
     public Image hunger_bar;
     public Image moralle_bar;
-
+    void Start()
+    {
+        player_stats = GetComponent<player_stats>();
+        if (player_stats == null) print(" ERROR !! --- Attach => player_stats script <=  to player !");
+    }
 
 
     void OnTriggerEnter (Collider transition_collider)
@@ -69,39 +75,55 @@ public class ui_manager : MonoBehaviour {
     public void IncreaseHunger()
     {
         hunger_bar.rectTransform.localPosition -= new Vector3(85, 0, 0);
+        player_stats.hunger++;
+        player_stats.CheckMaxCapStats();
     }
     public void DecreaseHunger()
     {
         hunger_bar.rectTransform.localPosition += new Vector3(85, 0, 0);
+        player_stats.hunger--;
+        player_stats.CheckDeathStats();
     }
 
     public void DecreaseHealth()
     {
         health_bar.rectTransform.localPosition += new Vector3(85, 0, 0);
+        player_stats.health--;
+        player_stats.CheckDeathStats();
     }
     public void IncreaseHealth()
     {
         health_bar.rectTransform.localPosition -= new Vector3(85, 0, 0);
+        player_stats.health++;
+        player_stats.CheckMaxCapStats();
     }
 
     public void IncreaseHydration()
     {
         hydration_bar.rectTransform.localPosition -= new Vector3(85, 0, 0);
+        player_stats.hydration++;
+        player_stats.CheckMaxCapStats();
     }
 
     public void DecreaseHydration()
     {
         hydration_bar.rectTransform.localPosition += new Vector3(85, 0, 0);
+        player_stats.hydration--;
+        player_stats.CheckDeathStats();
     }
 
     public void IncreaseMorale()
     {
         moralle_bar.rectTransform.localPosition -= new Vector3(85, 0, 0);
+        player_stats.morale++;
+        player_stats.CheckMaxCapStats();
     }
 
     public void DecreaseMorale()
     {
         moralle_bar.rectTransform.localPosition += new Vector3(85, 0, 0);
+        player_stats.morale--;
+        player_stats.CheckDeathStats();
     }
 
 
@@ -109,7 +131,7 @@ public class ui_manager : MonoBehaviour {
     {
         DecreaseHunger();
         DecreaseHydration();
-        DecreaseHealth();
+        //DecreaseHealth();
     }
     #endregion
 
