@@ -28,7 +28,7 @@ GameObject:
   - 224: {fileID: 22494002}
   - 114: {fileID: 11438312}
   m_Layer: 5
-  m_Name: 1 (1)
+  m_Name: pause_menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
