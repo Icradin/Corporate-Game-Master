@@ -28,20 +28,18 @@ public class player_stats : MonoBehaviour {
     }
 	public void CheckDeathStats()
     {
-        if (health < 0 || hydration < 0 || hunger < 0 || morale < 0)
-        {
-            string msg = "You died from ";
-            if (health < 0)
-                msg += "\"health loss\"";
-            if (hydration < 0)
-                msg += "\"dehydration\"";
-            if (hunger < 0)
-                msg += "\"not enough food\"";
-            if (morale < 0)
-                msg += "\"bad morale\"";
 
-            msg += "..... !";
-            print(msg);
-        }
+
+        if (health <= 0)
+            print("You died from health loss ");
+        if (hydration <= 0)
+            print("You died from health dehydration ");
+        if (hunger <= 0)
+            print("You died from starving ");
+        if (morale <= 0)
+            print("You died from loosing hope of living ");
+
+
     }
+    
 }

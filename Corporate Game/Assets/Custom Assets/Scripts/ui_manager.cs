@@ -33,6 +33,17 @@ public class ui_manager : MonoBehaviour {
     public Image hydration_bar;
     public Image hunger_bar;
     public Image moralle_bar;
+
+
+
+    bool enteredSpring = false;
+    bool enteredFruit = false;
+    bool enteredFishing = false;
+    bool enteredDirtyWater = false;
+    bool enteredSleep = false;
+
+
+
     void Start()
     {
         player_stats = GetComponent<player_stats>();
@@ -40,34 +51,119 @@ public class ui_manager : MonoBehaviour {
     }
 
 
-    void OnTriggerEnter (Collider transition_collider)
+    void OnTriggerEnter(Collider transition_collider)
     {
-		
-		if (transition_collider.name == "spring_transition")
-			spring_text.GetComponent<Text> ().enabled = true;
 
-		if (transition_collider.name == "apple_transition")
-			fruit_text.GetComponent<Text>().enabled = true;
-		
-		if (transition_collider.name == "fishing_transition")
-			fishing_text.GetComponent<Text>().enabled = true;
-
+        if (transition_collider.name == "spring_transition")
+        {
+            spring_text.GetComponent<Text>().enabled = true;
+            enteredSpring = true;
+        }
+        if (transition_collider.name == "apple_transition")
+        {
+            fruit_text.GetComponent<Text>().enabled = true;
+            enteredFruit = true;
+        }
+        if (transition_collider.name == "fishing_transition")
+        {
+            fishing_text.GetComponent<Text>().enabled = true;
+            enteredFishing = true;
+        }
         if (transition_collider.name == "dirty_water_transition")
+        {
             dirty_water_text.GetComponent<Text>().enabled = true;
-
+            enteredDirtyWater = true;
+        }
         if (transition_collider.name == "sleeping_transition")
+        {
             sleeping_text.GetComponent<Text>().enabled = true;
-
+            enteredSleep = true;
+        }
     }
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    DecreseStatsOnAction();
-        //}
 
-      
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+
+            if (enteredSpring)
+            {
+                water_bottle_ui.GetComponent<Image>().enabled = true;
+                david.GetComponent<conversation_logic>().SetWater();
+                david.GetComponent<conversation_logic>().ActionCount();
+                spring_collider.GetComponent<BoxCollider>().enabled = false;
+                spring_text.GetComponent<Text>().enabled = false;
+                dirty_water_collider.GetComponent<BoxCollider>().enabled = false;
+                Invoke("DecreseStatsOnAction", 2.0f);
+                print("Fresh water !");
+                enteredSpring = false;
+            }
+
+
+            else if (enteredFruit)
+            {
+                apple_ui.GetComponent<Image>().enabled = true;
+                david.GetComponent<conversation_logic>().SetFruit();
+                david.GetComponent<conversation_logic>().ActionCount();
+                fruit_collider.GetComponent<BoxCollider>().enabled = false;
+                fruit_text.GetComponent<Text>().enabled = false;
+                Invoke("DecreseStatsOnAction", 2.0f);
+                Debug.Log("Got apples");
+                enteredFruit = false;
+            }
+
+
+
+            else if (enteredFishing)
+            {
+                fishing_ui.GetComponent<Image>().enabled = true;
+                david.GetComponent<conversation_logic>().SetFish();
+                david.GetComponent<conversation_logic>().ActionCount();
+                fish_collider.GetComponent<BoxCollider>().enabled = false;
+                fishing_text.GetComponent<Text>().enabled = false;
+                Invoke("DecreseStatsOnAction", 2.0f);
+                print("FISH");
+                enteredFishing = false;
+            }
+
+
+
+            else if (enteredDirtyWater)
+            {
+                water_bottle_ui.GetComponent<Image>().enabled = true;
+                david.GetComponent<conversation_logic>().SetDirtyWater();
+                david.GetComponent<conversation_logic>().ActionCount();
+                dirty_water_collider.GetComponent<BoxCollider>().enabled = false;
+                dirty_water_text.GetComponent<Text>().enabled = false;
+                spring_collider.GetComponent<BoxCollider>().enabled = false;
+                Invoke("DecreseStatsOnAction", 2.0f);
+                print("DIRTY WWATER");
+                enteredDirtyWater = false;
+            }
+
+
+            else if (enteredSleep)
+            {
+                
+                david.GetComponent<conversation_logic>().ResetActions();
+                tent_collider.GetComponent<BoxCollider>().enabled = false;
+                sleeping_text.GetComponent<Text>().enabled = false;
+                if (!david.GetComponent<conversation_logic>().fire_place_ON)
+                {
+                    Invoke("DecreaseMorale", 2.0f);
+                    print("Morale has been decreased ( fire not ON when sleeping)");
+                }
+                else
+                {
+                    Invoke("IncreaseMorale", 2.0f);
+                }
+                print("SLEEEEP");
+                enteredSleep = false;
+
+            }
+        }
+
     }
 
     #region Increase / decrease stats on actions
@@ -139,96 +235,40 @@ public class ui_manager : MonoBehaviour {
 
     void OnTriggerStay (Collider transition_collider)
     {
-		if (transition_collider.name == "spring_transition")
-        {
-            print("spring transition");
-			if (Input.GetKeyDown (KeyCode.E))
-            {
-				water_bottle_ui.GetComponent<Image> ().enabled = true;
-                david.GetComponent<conversation_logic>().SetWater();
-                david.GetComponent<conversation_logic>().ActionCount();
-                spring_collider.GetComponent<BoxCollider>().enabled = false;
-                spring_text.GetComponent<Text>().enabled = false;
-                dirty_water_collider.GetComponent<BoxCollider>().enabled = false;
-                  Invoke("DecreseStatsOnAction", 2.0f);
-            }
-		}
-
-		if (transition_collider.name == "apple_transition")
-        {
-			if (Input.GetKeyDown (KeyCode.E))
-            {
-				apple_ui.GetComponent<Image> ().enabled = true;
-                david.GetComponent<conversation_logic>().SetFruit();
-                david.GetComponent<conversation_logic>().ActionCount();
-                fruit_collider.GetComponent<BoxCollider>().enabled = false;
-                fruit_text.GetComponent<Text>().enabled = false;
-                Invoke("DecreseStatsOnAction", 2.0f);
-            }
-		}
-
-		if (transition_collider.name == "fishing_transition")
-        {
-			if (Input.GetKeyDown (KeyCode.E))
-            {
-				fishing_ui.GetComponent<Image> ().enabled = true;
-                david.GetComponent<conversation_logic>().SetFish();
-                david.GetComponent<conversation_logic>().ActionCount();
-                fish_collider.GetComponent<BoxCollider>().enabled = false;
-                fishing_text.GetComponent<Text>().enabled = false;
-                Invoke("DecreseStatsOnAction", 2.0f);
-            }
-		}
-
-        if (transition_collider.name == "dirty_water_transition")
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                water_bottle_ui.GetComponent<Image>().enabled = true;
-                david.GetComponent<conversation_logic>().SetDirtyWater();
-                david.GetComponent<conversation_logic>().ActionCount();
-                dirty_water_collider.GetComponent<BoxCollider>().enabled = false;
-                dirty_water_text.GetComponent<Text>().enabled = false;
-                spring_collider.GetComponent<BoxCollider>().enabled = false;
-                Invoke("DecreseStatsOnAction", 2.0f);
-            }
-        }
-
-        if (transition_collider.name == "sleeping_transition")
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                david.GetComponent<conversation_logic>().ResetActions();
-                tent_collider.GetComponent<BoxCollider>().enabled = false;
-                sleeping_text.GetComponent<Text>().enabled = false;
-                if(!david.GetComponent<conversation_logic>().fire_place_ON)
-                {
-                    Invoke("DecreaseMorale", 2.0f);
-                    print("Morale has been decreased ( fire not ON when sleeping)");
-                }
-                 
-            }
-        }
+        Debug.Log("collide");
+		
 
     }
 
-	void OnTriggerExit (Collider transition_collider)
+    void OnTriggerExit(Collider transition_collider)
     {
-		
-		if (transition_collider.name == "spring_transition")
-			spring_text.GetComponent<Text>().enabled = false;
 
-		if (transition_collider.name == "apple_transition")
-			fruit_text.GetComponent<Text>().enabled = false;
-		
-		if (transition_collider.name == "fishing_transition")
-			fishing_text.GetComponent<Text>().enabled = false;
+        if (transition_collider.name == "spring_transition")
+        {
+            spring_text.GetComponent<Text>().enabled = false;
+            enteredSpring = false;
+        }
+        if (transition_collider.name == "apple_transition")
+        {
+            fruit_text.GetComponent<Text>().enabled = false;
+            enteredFruit = false;
+        }
+        if (transition_collider.name == "fishing_transition")
 
+        {
+            enteredFishing = false;
+            fishing_text.GetComponent<Text>().enabled = false;
+        }
         if (transition_collider.name == "dirty_water_transition")
+        {
+            enteredDirtyWater = false;
             dirty_water_text.GetComponent<Text>().enabled = false;
-
+        }
         if (transition_collider.name == "sleeping_transition")
+        {
+            enteredSleep = false;
             sleeping_text.GetComponent<Text>().enabled = false;
+        }
     }
 		
 }

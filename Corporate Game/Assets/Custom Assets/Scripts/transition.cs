@@ -7,7 +7,7 @@ public class transition : MonoBehaviour {
 
 	public int transition_number;
 
-    bool has_entered;
+    bool has_entered = false;
     
 
     void Update()
