@@ -49,8 +49,9 @@ public class conversation_logic : MonoBehaviour {
         inventory_fish = inventory_fish.GetComponent<Image>();
         inventory_oil = inventory_oil.GetComponent<Image>();
 
-       // ParticleSystem camp_particles = camp_fire.GetComponent<ParticleSystem>();
-        
+        // ParticleSystem camp_particles = camp_fire.GetComponent<ParticleSystem>();
+        camp_fire.GetComponent<ParticleSystem>().Stop();
+        camp_fire.GetComponentInChildren<ParticleSystem>().Stop();
         //camp_fire.GetComponent<ParticleSystem>() = false;
     }
 
@@ -78,8 +79,9 @@ public class conversation_logic : MonoBehaviour {
 
             if (given_oil)
             {
-                //camp_light.enabled = true;
-              //  fire_place_ON = true;
+                camp_fire.GetComponent<ParticleSystem>().Play();
+                camp_fire.GetComponentInChildren<ParticleSystem>().Play();
+                fire_place_ON = true;
                 
             }
         }
