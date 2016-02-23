@@ -55,7 +55,7 @@ public class transition_manager : MonoBehaviour {
 	}
 
 
-	void fade(bool fade){
+	public void fade(bool fade){
 		if (fade == true)
 			fade_image.CrossFadeAlpha (1, fade_time, false);
 

@@ -33,7 +33,7 @@ public class ui_manager : MonoBehaviour {
     public Image hydration_bar;
     public Image hunger_bar;
     public Image moralle_bar;
-
+    float image_offset;
 
 
     bool enteredSpring = false;
@@ -48,6 +48,7 @@ public class ui_manager : MonoBehaviour {
     {
         player_stats = GetComponent<player_stats>();
         if (player_stats == null) print(" ERROR !! --- Attach => player_stats script <=  to player !");
+        image_offset = player_stats.image_offset;
     }
 
 
@@ -170,54 +171,62 @@ public class ui_manager : MonoBehaviour {
 
     public void IncreaseHunger()
     {
-        hunger_bar.rectTransform.localPosition -= new Vector3(85, 0, 0);
+      
         player_stats.hunger++;
-        player_stats.CheckMaxCapStats();
+        if(!player_stats.CheckMaxHunger())
+            hunger_bar.rectTransform.localPosition -= new Vector3(image_offset, 0, 0);
     }
     public void DecreaseHunger()
     {
-        hunger_bar.rectTransform.localPosition += new Vector3(85, 0, 0);
+        hunger_bar.rectTransform.localPosition += new Vector3(image_offset, 0, 0);
         player_stats.hunger--;
         player_stats.CheckDeathStats();
     }
 
     public void DecreaseHealth()
     {
-        health_bar.rectTransform.localPosition += new Vector3(85, 0, 0);
+        health_bar.rectTransform.localPosition += new Vector3(image_offset, 0, 0);
         player_stats.health--;
         player_stats.CheckDeathStats();
     }
     public void IncreaseHealth()
     {
-        health_bar.rectTransform.localPosition -= new Vector3(85, 0, 0);
+   
         player_stats.health++;
-        player_stats.CheckMaxCapStats();
+        if(!player_stats.CheckMaxHealth())
+            health_bar.rectTransform.localPosition -= new Vector3(image_offset, 0, 0);
     }
 
     public void IncreaseHydration()
     {
-        hydration_bar.rectTransform.localPosition -= new Vector3(85, 0, 0);
+      
         player_stats.hydration++;
-        player_stats.CheckMaxCapStats();
+        if(!player_stats.CheckMaxHydration())
+             hydration_bar.rectTransform.localPosition -= new Vector3(image_offset, 0, 0);
     }
 
     public void DecreaseHydration()
     {
-        hydration_bar.rectTransform.localPosition += new Vector3(85, 0, 0);
+        hydration_bar.rectTransform.localPosition += new Vector3(image_offset, 0, 0);
         player_stats.hydration--;
         player_stats.CheckDeathStats();
     }
 
     public void IncreaseMorale()
     {
-        moralle_bar.rectTransform.localPosition -= new Vector3(85, 0, 0);
         player_stats.morale++;
-        player_stats.CheckMaxCapStats();
+       
+        if(!player_stats.CheckMaxMorale())
+        {
+
+            moralle_bar.rectTransform.localPosition -= new Vector3(image_offset, 0, 0);
+        }
+
     }
 
     public void DecreaseMorale()
     {
-        moralle_bar.rectTransform.localPosition += new Vector3(85, 0, 0);
+        moralle_bar.rectTransform.localPosition += new Vector3(image_offset, 0, 0);
         player_stats.morale--;
         player_stats.CheckDeathStats();
     }
@@ -269,6 +278,11 @@ public class ui_manager : MonoBehaviour {
             enteredSleep = false;
             sleeping_text.GetComponent<Text>().enabled = false;
         }
+    }
+
+    public void EnableChoiceButton()
+    {
+
     }
 		
 }

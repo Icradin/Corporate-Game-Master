@@ -8,9 +8,12 @@ public class pause_menu_manager : MonoBehaviour {
     [SerializeField]
     GameObject pause_menu;
 
+
     void Start()
     {
         pause_menu.SetActive(false);
+
+        
     }
 	public void DeactivatePauseMenu()
     {
@@ -20,5 +23,8 @@ public class pause_menu_manager : MonoBehaviour {
     {
         pause_menu.SetActive(true);
     }
+
+
+    
 
 }

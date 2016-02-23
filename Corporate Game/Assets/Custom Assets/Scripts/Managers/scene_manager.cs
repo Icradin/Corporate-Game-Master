@@ -4,7 +4,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public enum GameState
 {
-    Menu, InGame, Paused, TalkingWithDavid
+    Menu, InGame, Paused, TalkingWithDavid, InteractBarrel
 }
 public class scene_manager : MonoBehaviour {
   
@@ -82,6 +82,11 @@ public class scene_manager : MonoBehaviour {
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 break;
+            case GameState.InteractBarrel:
+                game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = false;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                break;
         }
         currentState = newGameState;
 
@@ -98,6 +103,9 @@ public class scene_manager : MonoBehaviour {
                 break;
             case GameState.Paused:
                 game_manager.Instance.pause_menu.DeactivatePauseMenu();
+                game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = true;
+                break;
+            case GameState.InteractBarrel:
                 game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = true;
                 break;
         }

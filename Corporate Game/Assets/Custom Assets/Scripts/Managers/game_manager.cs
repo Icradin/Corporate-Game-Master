@@ -38,12 +38,17 @@ public class game_manager : MonoBehaviour {
         }
     }
 
-
-
+    //set by UI options
+    private int difficulty_level;
+    public int DifficultyLevel
+    {
+        get { return difficulty_level; }
+        set { difficulty_level = value; }
+    }
     public bool gotDuctTape = false;
     void Awake()
     {
-
+        difficulty_level = 1;
         if (Application.loadedLevel != 0)
         {
             current_state = GameState.InGame;

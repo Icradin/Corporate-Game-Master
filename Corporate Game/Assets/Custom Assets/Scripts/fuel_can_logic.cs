@@ -2,66 +2,114 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class fuel_can_logic : MonoBehaviour {
+public class fuel_can_logic : MonoBehaviour
+{
 
-	public GameObject fuel_can_text;
-	public GameObject fuel_can_image;
-	public GameObject oil_barrel;
+    public GameObject fuel_can_text;
+    public GameObject fuel_can_text_duct_tape;
+    public GameObject fuel_can_image;
+    public GameObject oil_barrel;
     public GameObject oil_level;
-
+    public GameObject barrel_choice;
+    public GameObject game_win_image;
     public GameObject david;
 
+    bool disablePromptText = false;
     private bool fuel_can_empty = false;
     private int timesUsed = 0;
 
-   // private float oil_height = 1.0f;
-
-
-	void OnMouseEnter ()
+    // private float oil_height = 1.0f;
+    bool mouseOver = true;
+    void Start()
     {
-        if (timesUsed == 3)
-            fuel_can_empty = true;
-        if (!game_manager.Instance.gotDuctTape)
-        {
-            fuel_can_text.GetComponent<Text>().enabled = true;
-        }
-        else
-        {
-            //show text to seal oil leakage from barrel
-        }
-
-	}
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.G))
-            oil_level.transform.Translate(0, -0.6f, 0);
+        barrel_choice.SetActive(false);
+        game_win_image.SetActive(false);
     }
-	void OnMouseOver()
+    void OnMouseEnter()
     {
-
-		if (Input.GetKeyDown(KeyCode.E))
+        if (!disablePromptText)
         {
-
-            if(game_manager.Instance.gotDuctTape)
+            if (timesUsed == 3)
+                fuel_can_empty = true;
+            if (!game_manager.Instance.gotDuctTape)
             {
-                //do action if got ducttape 
-
-            }else if (!fuel_can_empty) //otherwise do action if can get fuel
+                fuel_can_text.GetComponent<Text>().enabled = true;
+            }
+            else
             {
-                
-                oil_level.transform.Translate(0, -0.6f, 0);
-                timesUsed++;
-                fuel_can_image.GetComponent<Image>().enabled = true;
-                fuel_can_text.GetComponent<Text>().enabled = false;
-                this.GetComponent<MeshCollider>().enabled = false;
-                david.GetComponent<conversation_logic>().SetOil();
+                fuel_can_text_duct_tape.GetComponent<Text>().enabled = true;
             }
         }
-	}
 
+    }
+    void Update()
+    {
+        //if(Input.GetKeyDown(KeyCode.G))
+        //    oil_level.transform.Translate(0, -0.6f, 0);
+    }
+    void OnMouseOver()
+    {
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            disablePromptText = true;
 
-void OnMouseExit ()
+            if (game_manager.Instance.gotDuctTape)
+            {
+                fuel_can_text_duct_tape.GetComponent<Text>().enabled = false;
+                game_manager.Instance.scene_manager.SetState(GameState.InteractBarrel);
+                barrel_choice.SetActive(true);
+
+            }
+            else if (!fuel_can_empty) //otherwise do action if can get fuel
+            {
+
+                TakeOil();
+            }
+        }
+    }
+    public void SealLeakage()
+    {
+      
+        barrel_choice.SetActive(false);
+        game_win_image.SetActive(true);
+        game_manager.Instance.scene_manager.SetState(GameState.InGame);
+        print(" WIn yaay");
+        Invoke("OfficeLevel", 5.0f);
+        Invoke("Fade", 2.0f);
+       
+    }
+
+    public void DisableChoice()
+    {
+        disablePromptText = false;
+        barrel_choice.SetActive(false);
+        game_manager.Instance.scene_manager.SetState(GameState.InGame);
+    }
+    void Fade()
+    {
+        FindObjectOfType<transition_manager>().fade(true);
+
+    }
+    void OfficeLevel()
+    {
+        game_manager.Instance.scene_manager.SwitchToLevel(2);
+    }
+
+    public void TakeOil()
+    {
+        disablePromptText = false;
+        barrel_choice.SetActive(false);
+        game_manager.Instance.scene_manager.SetState(GameState.InGame);
+        oil_level.transform.Translate(0, -0.6f, 0);
+        timesUsed++;
+        fuel_can_image.GetComponent<Image>().enabled = true;
+        fuel_can_text.GetComponent<Text>().enabled = false;
+        this.GetComponent<MeshCollider>().enabled = false;
+        david.GetComponent<conversation_logic>().SetOil();
+
+    }
+    void OnMouseExit()
     {
         if (!game_manager.Instance.gotDuctTape)
         {
@@ -69,9 +117,9 @@ void OnMouseExit ()
         }
         else
         {
-            //hide text to seal oil leakage from barrel;
+            fuel_can_text_duct_tape.GetComponent<Text>().enabled = false;
         }
-	}
+    }
 
 
 }

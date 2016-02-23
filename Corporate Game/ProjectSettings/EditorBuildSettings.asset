@@ -9,3 +9,5 @@ EditorBuildSettings:
     path: Assets/Main Menu.unity
   - enabled: 1
     path: Assets/Corporate Lost Main.unity
+  - enabled: 1
+    path: Assets/Office.unity
