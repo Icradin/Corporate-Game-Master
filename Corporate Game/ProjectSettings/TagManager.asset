@@ -11,6 +11,11 @@ TagManager:
   - transition
   - Fire
   - GameManager
+  - marketing
+  - boss
+  - key_account_manager
+  - regulatory_affairs
+  - brand_manager
   layers:
   - Default
   - TransparentFX
@@ -20,7 +25,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - people
   - 
   - 
   - 
