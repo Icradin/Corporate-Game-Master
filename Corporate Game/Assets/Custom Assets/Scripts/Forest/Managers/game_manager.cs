@@ -46,6 +46,15 @@ public class game_manager : MonoBehaviour {
         set { difficulty_level = value; }
     }
     public bool gotDuctTape = false;
+
+    public int conversation_progression = 0;
+    public int boss_talk_progression = 0;
+    public bool nothing_to_talk = false;
+    public bool boss_lose = false;
+    public bool boss_double_visit = false;
+
+    public bool talked = false;
+
     void Awake()
     {
         difficulty_level = 1;
@@ -72,4 +81,9 @@ public class game_manager : MonoBehaviour {
         pause_menu = FindObjectOfType<pause_menu_manager>();
         scene_manager = FindObjectOfType<scene_manager>();
     }
+
+
+
+
+
 }

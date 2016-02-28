@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class talk_brand_manager : talk_ui_text {
+public class talk_brand_manager : talk_base {
 
     // Use this for initialization
     override public void Start()
