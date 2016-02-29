@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class nusre_logic : MonoBehaviour {
     NavMeshAgent agent;
@@ -8,11 +9,14 @@ public class nusre_logic : MonoBehaviour {
     public bool talk = false;
 
     AudioSource audio_source;
+    SpriteRenderer speech_bubble;
 
 	// Use this for initialization
 	void Start () {
         agent = GetComponent<NavMeshAgent>();
         audio_source = GetComponent<AudioSource>();
+        speech_bubble = GetComponentInChildren<SpriteRenderer>();
+        speech_bubble.enabled = false;
     }
 
     // Update is called once per frame
@@ -29,13 +33,15 @@ public class nusre_logic : MonoBehaviour {
     IEnumerator end (float audiotime)
     {
         Debug.Log("med sister speaking");
+        speech_bubble.enabled = true;
         yield return new WaitForSeconds(audiotime + 1);
         transition_manager.instance.transition(1, gameObject);
         game_manager.Instance.scene_manager.SetState(GameState.InGame);
+        game_manager.Instance.Player.GetComponent<FirstPersonController>().m_WalkSpeed = 10;
         yield return new WaitForSeconds(1);
         game_manager.Instance.boss_talk_progression++;
         game_manager.Instance.talked = false;
-        game_manager.Instance.Player.GetComponent<CharacterController>().enabled = true;
+        speech_bubble.enabled = false;
         Debug.Log("successfull meeting");
         Destroy(gameObject, 2f);
     }

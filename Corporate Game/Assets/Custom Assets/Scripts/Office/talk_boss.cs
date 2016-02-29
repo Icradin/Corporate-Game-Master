@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class talk_boss: talk_base {
+public class talk_boss : talk_base
+{
 
     public GameObject game_over_screen;
     bool bossImrpessed = false;
+
+    public AudioClip talk_account_manager;
+    public AudioClip boss_talk_double_visit;
+    public AudioClip boss_impressed;
+    public AudioClip boss_disappointed;
+    public AudioClip boss_win;
+    public AudioClip boss_talk_other;
 
     // Use this for initialization
     override public void Start()
@@ -14,43 +22,44 @@ public class talk_boss: talk_base {
     }
     public override void talk()
     {
-        game_manager.Instance.talked = false;
-      
+
+
 
         if (boss_talk_progression == 1 && conversation_progression == 0)
         {
             // play boss marketing audio .. informs that plaer can talk to account manager bout the problem
-            Debug.Log("maybe talk to account manager");
-            conversation_progression++;
-            nothing_to_talk = true;
+            Debug.Log("maybe talk to account manager ... begin");
+            audio_source.PlayOneShot(talk_account_manager);
+            StartCoroutine("talk_to_account_manager", talk_account_manager.length);
             return;
         }
 
         if (boss_talk_progression == 2 && boss_lose == false && !boss_double_visit)
         {
             //play audio to inform that player can do a double vist 
-            conversation_progression++;
-            boss_double_visit = true;
-            nothing_to_talk = true;
-            Debug.Log("boss progress - tells you can do double visit");
-          
+
+            Debug.Log("boss progress - tells you can do double visit ---- start talk");
+            audio_source.PlayOneShot(boss_talk_double_visit);
+            StartCoroutine("double_visist_talking", boss_talk_double_visit.length);
             return;
         }
-   
-        if(boss_talk_progression == 3 && !bossImrpessed)
+
+        if (boss_talk_progression == 3 && !bossImrpessed)
         {
-            bossImrpessed = true;
-            Debug.Log("boss is impressed from the double visit meeting");
-            conversation_progression++;
-            nothing_to_talk = true;
+            Debug.Log("boss impressed --- start");
+
+            audio_source.PlayOneShot(boss_impressed);
+            StartCoroutine("boss_impressed_talking", boss_impressed.length);
+
+
             return;
         }
 
         if (boss_talk_progression == 2 && boss_lose == true)
         {
             Debug.Log("boss is dissapointed .. you loose your job..");
-            audio_source.PlayOneShot(audio_clips[2]);
-            StartCoroutine("game_over", audio_clips[2].length + 1);
+            audio_source.PlayOneShot(boss_disappointed);
+            StartCoroutine("game_over", boss_disappointed.length + 1);
             return;
         }
 
@@ -65,8 +74,9 @@ public class talk_boss: talk_base {
         }
         if (nothing_to_talk)
         {
-            Debug.Log("boss says to talk to somebody else");
-            nothing_to_talk = false;
+            Debug.Log("boss tells u to talk to somebody else --- begin");
+            audio_source.PlayOneShot(boss_talk_other);
+            StartCoroutine("talk_to_somebody_else", boss_talk_other.length);
 
             return;
         }
@@ -86,5 +96,48 @@ public class talk_boss: talk_base {
         game_manager.Instance.scene_manager.SetState(GameState.InteractBarrel);
         Debug.Log("gameover");
     }
-}
 
+
+    IEnumerator talk_to_account_manager(float audiolenght)
+    {
+        speech_bubble.enabled = true;
+        yield return new WaitForSeconds(audiolenght);
+        Debug.Log("over ... acc manager.");
+        nothing_to_talk = true;
+        conversation_progression++;
+        speech_bubble.enabled = false;
+        game_manager.Instance.talked = false;
+    }
+
+    IEnumerator double_visist_talking(float audiolenght)
+    {
+        speech_bubble.enabled = true;
+        yield return new WaitForSeconds(audiolenght);
+        Debug.Log("boss progress - tells you can do double visit ---- end talk");
+        conversation_progression++;
+        boss_double_visit = true;
+        nothing_to_talk = true;
+        speech_bubble.enabled = false;
+        game_manager.Instance.talked = false;
+    }
+    IEnumerator boss_impressed_talking(float audiolenght)
+    {
+        speech_bubble.enabled = true;
+        yield return new WaitForSeconds(audiolenght);
+        Debug.Log("boss impressed --- end");
+        bossImrpessed = true;
+        conversation_progression++;
+        nothing_to_talk = true;
+        game_manager.Instance.talked = false;
+    }
+    IEnumerator talk_to_somebody_else(float audiolenght)
+    {
+        speech_bubble.enabled = true;
+        yield return new WaitForSeconds(audiolenght);
+        Debug.Log("boss tells u to talk to somebody else --- end");
+        nothing_to_talk = false;
+        speech_bubble.enabled = false;
+        game_manager.Instance.talked = false;
+    }
+
+}

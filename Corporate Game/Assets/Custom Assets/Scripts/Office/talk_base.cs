@@ -8,7 +8,7 @@ public class talk_base : MonoBehaviour {
 
     public GameObject ui_text;
     public AudioSource audio_source;
-    public AudioClip[] audio_clips;
+    //public AudioClip[] audio_clips;
 
     protected int conversation_progression
     {
@@ -36,11 +36,15 @@ public class talk_base : MonoBehaviour {
         set { game_manager.Instance.boss_double_visit = value; }
     }
 
+    protected SpriteRenderer speech_bubble;
 
     // Use this for initialization
     public virtual void Start () {
         turn_off();
-	}
+
+        speech_bubble = GetComponentInChildren<SpriteRenderer>();
+        speech_bubble.enabled = false;
+    }
 	
 	
     public void turn_off()
