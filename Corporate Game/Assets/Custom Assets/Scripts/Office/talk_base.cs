@@ -8,7 +8,7 @@ public class talk_base : MonoBehaviour {
 
     public GameObject ui_text;
     public AudioSource audio_source;
-    public AudioClip[] auido_clips;
+    public AudioClip[] audio_clips;
 
     protected int conversation_progression
     {

@@ -30,27 +30,32 @@ public class talk_managing : MonoBehaviour {
                 current_talk_text = hit.transform.GetComponent< talk_base> (); //store a refference, used for Ui prompt text 
                 current_talk_text.turn_on();//turn it on.
             }
-            Debug.Log("work");
+   
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.Log("work2");
-                //check who you talking to.
-                Debug.Log(hit.transform.tag);
+                game_manager.Instance.talked = true;
+
                 switch (hit.transform.tag)
                 {
                     case "marketing":
                         hit.transform.GetComponent<talk_marketing>().talk();
-                        game_manager.Instance.talked = true;
+                        
                         break;
                     case "boss":
-                        Debug.Log("work3");
                         hit.transform.GetComponent<talk_boss>().talk();
+                      
                         break;
                     case "key_account_manager":
+                        hit.transform.GetComponent<talk_account_manager>().talk();
+                   
                         break;
                     case "regulatory affairs":
+                        hit.transform.GetComponent<talk_regulatory_affairs>().talk();
+                     
                         break;
                     case "brand_manager":
+                        hit.transform.GetComponent<talk_brand_manager>().talk();
+                     
                         break;
                 }
             }
