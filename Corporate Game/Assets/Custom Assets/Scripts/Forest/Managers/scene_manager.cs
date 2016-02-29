@@ -88,7 +88,6 @@ public class scene_manager : MonoBehaviour {
                 Cursor.visible = true;
                 break;
             case GameState.NurseChoice:
-                game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = false;
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 break;

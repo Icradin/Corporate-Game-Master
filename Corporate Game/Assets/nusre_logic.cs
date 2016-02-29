@@ -35,7 +35,7 @@ public class nusre_logic : MonoBehaviour {
         yield return new WaitForSeconds(1);
         game_manager.Instance.boss_talk_progression++;
         game_manager.Instance.talked = false;
-        game_manager.Instance.Player.GetComponent<CharacterController>().enabled = false;
+        game_manager.Instance.Player.GetComponent<CharacterController>().enabled = true;
         Debug.Log("successfull meeting");
         Destroy(gameObject, 2f);
     }

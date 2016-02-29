@@ -68,8 +68,9 @@ public class talk_marketing : talk_base {
         Debug.Log("waiting for first speech to finish ... ");
         yield return new WaitForSeconds(firstAudio);
         transition_manager.instance.transition(2, gameObject);
-        game_manager.Instance.Player.GetComponent<CharacterController>().enabled = false;
         game_manager.Instance.Player.transform.LookAt(doctor.transform);
+        game_manager.Instance.Player.GetComponent<CharacterController>().enabled = false;
+
         yield return new WaitForSeconds(1);
         audio_source.PlayOneShot(audio_clips[2]);
         yield return new WaitForSeconds(audio_clips[2].length + 1);
