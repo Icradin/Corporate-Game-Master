@@ -49,7 +49,7 @@ public class talk_managing : MonoBehaviour {
                         hit.transform.GetComponent<talk_account_manager>().talk();
                    
                         break;
-                    case "regulatory affairs":
+                    case "regulatory_affairs":
                         hit.transform.GetComponent<talk_regulatory_affairs>().talk();
                      
                         break;

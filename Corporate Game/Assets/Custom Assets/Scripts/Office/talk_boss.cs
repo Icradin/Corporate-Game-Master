@@ -3,7 +3,7 @@ using System.Collections;
 
 public class talk_boss : talk_base
 {
-
+    public GameObject win_screen;
     public GameObject game_over_screen;
     bool bossImrpessed = false;
 
@@ -18,7 +18,7 @@ public class talk_boss : talk_base
     override public void Start()
     {
         base.Start();
-
+        win_screen.SetActive(false);
     }
     public override void talk()
     {
@@ -67,9 +67,8 @@ public class talk_boss : talk_base
 
         if (boss_talk_progression == 4)
         {
-            //play win audio
-            // fade black after audio
-            // win screen.
+            audio_source.PlayOneShot(boss_win);
+            StartCoroutine("game_win", boss_win.length);
             return;
         }
         if (nothing_to_talk)
@@ -85,7 +84,20 @@ public class talk_boss : talk_base
         game_manager.Instance.talked = false;
 
     }
+    IEnumerator game_win(float time)
+    {
+        speech_bubble.enabled = true;
+        yield return new WaitForSeconds(time);
+        speech_bubble.enabled = false;
+        yield return new WaitForSeconds(1);
+        transition_manager.instance.fade(true);
+        yield return new WaitForSeconds(1);
+        win_screen.SetActive(true);
+        transition_manager.instance.fade(false);
 
+    }
+
+    
     IEnumerator game_over(float audiolenght)
     {
         yield return new WaitForSeconds(audiolenght);
