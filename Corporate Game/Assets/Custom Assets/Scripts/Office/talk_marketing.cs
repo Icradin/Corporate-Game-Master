@@ -19,7 +19,7 @@ public class talk_marketing : talk_base
 
     public AudioClip marketing_already_visited;
 
-   
+    bool doubleVisitDone = false;
 
     // Use this for initialization
     override public void Start()
@@ -128,7 +128,7 @@ public class talk_marketing : talk_base
 
     override public void talk()
     {
-        if (conversation_progression == 0)
+        if (conversation_progression == 0 && boss_talk_progression == 0)
         {
             speech_bubble.enabled = true;
             audio_source.PlayOneShot(marketing_1);
@@ -138,8 +138,9 @@ public class talk_marketing : talk_base
 
             return;
         }
-        if (boss_double_visit)
+        if (boss_double_visit && !doubleVisitDone)
         {
+            doubleVisitDone = true;
             Debug.Log("Load double visit scene !");
             audio_source.PlayOneShot(double_visit_talk);
             StartCoroutine("double_visit", double_visit_talk.length + 1f);
