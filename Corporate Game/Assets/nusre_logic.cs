@@ -35,7 +35,7 @@ public class nusre_logic : MonoBehaviour {
         Debug.Log("med sister speaking");
         speech_bubble.enabled = true;
         yield return new WaitForSeconds(audiotime + 1);
-        transition_manager.instance.transition(1, gameObject);
+        transition_manager.instance.transition(0, gameObject);
         game_manager.Instance.scene_manager.SetState(GameState.InGame);
         game_manager.Instance.Player.GetComponent<FirstPersonController>().m_WalkSpeed = 10;
         yield return new WaitForSeconds(1);

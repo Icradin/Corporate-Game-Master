@@ -5,6 +5,8 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class conversation_logic : MonoBehaviour {
 
+   
+    public AudioSource audio_source;
     //references game objects
 	public GameObject player, talk_to_david, tent_collider,
         water_collider, dirty_water_collider, fruit_collider, fish_collider, oil_collider, camp_fire;
@@ -41,6 +43,22 @@ public class conversation_logic : MonoBehaviour {
     [HideInInspector]
     public bool fire_place_ON = false;
 
+
+    public AudioClip greet_david;
+    public AudioClip greet_david2;
+    public AudioClip greet_david3;
+
+
+
+    public AudioClip what_happened;
+    public AudioClip survive_audio;
+
+    public AudioClip gave_oil;
+    public AudioClip gave_water;
+    public AudioClip gave_dirty_water;
+    public AudioClip gave_fruit;
+    public AudioClip gave_fish;
+
     void Start()
     {
         ui_manager = FindObjectOfType<ui_manager>();
@@ -54,20 +72,9 @@ public class conversation_logic : MonoBehaviour {
         camp_fire.GetComponentInChildren<ParticleSystem>().Stop();
         //camp_fire.GetComponent<ParticleSystem>() = false;
     }
-
-    void Update()
+    IEnumerator change_time()
     {
-       // health_timer = health_timer * Time.deltaTime*10;
-       // hydration_timer = hydration_timer * Time.deltaTime;
-       // hunger_timer = hunger_timer * Time.deltaTime;
-      //  moralle_timer = hunger_timer * Time.deltaTime;
-
-        //I need this tranform to be a RectTransfom but for some reason it doesn't work. 
-        //the healthbar needs to move left constantly during the dame at a slow pace
-        //but this formatting doesn't work for some reason.
-
-       // hydration_bar.transform.position = new Vector3(-health_timer, 0.0f, 0.0f);
-
+        yield return new WaitForSeconds(2);
         if (action_count == 0)
         {
             tent_collider.GetComponent<BoxCollider>().enabled = true;
@@ -82,7 +89,7 @@ public class conversation_logic : MonoBehaviour {
                 camp_fire.GetComponent<ParticleSystem>().Play();
                 camp_fire.GetComponentInChildren<ParticleSystem>().Play();
                 fire_place_ON = true;
-                
+
             }
         }
 
@@ -114,6 +121,20 @@ public class conversation_logic : MonoBehaviour {
             //key_light_1.intensity = 0.1f;
             //key_light_1.intensity = 0.1f;
         }
+    }
+    void Update()
+    {
+       // health_timer = health_timer * Time.deltaTime*10;
+       // hydration_timer = hydration_timer * Time.deltaTime;
+       // hunger_timer = hunger_timer * Time.deltaTime;
+      //  moralle_timer = hunger_timer * Time.deltaTime;
+
+        //I need this tranform to be a RectTransfom but for some reason it doesn't work. 
+        //the healthbar needs to move left constantly during the dame at a slow pace
+        //but this formatting doesn't work for some reason.
+
+       // hydration_bar.transform.position = new Vector3(-health_timer, 0.0f, 0.0f);
+
     }
 
     public void KillingPeople()
@@ -147,6 +168,7 @@ public class conversation_logic : MonoBehaviour {
             oil_collider.GetComponent<MeshCollider>().enabled = false;
             tent_collider.GetComponent<BoxCollider>().enabled = false;
         }
+        StartCoroutine("change_time");
     }
 
     public void ResetActions()
@@ -166,98 +188,161 @@ public class conversation_logic : MonoBehaviour {
     //Button Functions
     public void GiveWater()
     {
+
+        stop_audio();
+        audio_source.PlayOneShot(gave_water);
+
         ui_manager.IncreaseHydration();
 
         inventory_water.enabled = false;
         got_dirty_water = false;
         got_water = false;
-        give_water.GetComponent<Image>().enabled = false;
-        give_water.GetComponent<Button>().enabled = false;
-        give_dirty_water.GetComponent<Image>().enabled = false;
-        give_dirty_water.GetComponent<Button>().enabled = false;
+        //give_water.GetComponent<Image>().enabled = false;
+        //give_water.GetComponent<Button>().enabled = false;
+        give_water.gameObject.SetActive(false);
+
+        //give_dirty_water.GetComponent<Image>().enabled = false;
+        //give_dirty_water.GetComponent<Button>().enabled = false;
+        give_dirty_water.gameObject.SetActive(false);
+
     }
 
     public void GiveDirtyWater()
     {
 
+        stop_audio();
+        audio_source.PlayOneShot(gave_dirty_water);
+
         ui_manager.IncreaseHydration();
         ui_manager.DecreaseHealth();
 
         inventory_water.enabled = false;
         got_dirty_water = false;
         got_water = false;
-        give_dirty_water.GetComponent<Image>().enabled = false;
-        give_dirty_water.GetComponent<Button>().enabled = false;
-        give_water.GetComponent<Image>().enabled = false;
-        give_water.GetComponent<Button>().enabled = false;
+        //give_dirty_water.GetComponent<Image>().enabled = false;
+        //give_dirty_water.GetComponent<Button>().enabled = false;
+        give_dirty_water.gameObject.SetActive(false);
+
+
+        //give_water.GetComponent<Image>().enabled = false;
+        //give_water.GetComponent<Button>().enabled = false;
+        give_water.gameObject.SetActive(false);
+
 
     }
 
     public void GiveFruit()
     {
+
+        stop_audio();
+        audio_source.PlayOneShot(gave_fruit);
+
         ui_manager.IncreaseHunger();
 
         inventory_fruit.enabled = false;
         got_fruit = false;
-        give_fruit.GetComponent<Image>().enabled = false;
-        give_fruit.GetComponent<Button>().enabled = false;
+        //give_fruit.GetComponent<Image>().enabled = false;
+        //give_fruit.GetComponent<Button>().enabled = false;
+        give_fruit.gameObject.SetActive(false);
+
     }
 
-    
+
     public void GiveFish()
     {
+
+        stop_audio();
+        audio_source.PlayOneShot(gave_fish);
+
         ui_manager.IncreaseHunger();
         ui_manager.DecreaseHealth();
 
         inventory_fish.enabled = false;
         got_fish = false;
-        give_fish.GetComponent<Image>().enabled = false;
-        give_fish.GetComponent<Button>().enabled = false;
+        //give_fish.GetComponent<Image>().enabled = false;
+        //give_fish.GetComponent<Button>().enabled = false;
+        give_fish.gameObject.SetActive(false);
+
+
     }
 
-   
+
     public void GiveOil()
     {
+
+        stop_audio();
+        audio_source.PlayOneShot(gave_oil);
+
         inventory_oil.enabled = false;
         
         got_oil = false;
-        give_oil.GetComponent<Image>().enabled = false;
-        give_water.GetComponent<Button>().enabled = false;
+        //give_oil.GetComponent<Image>().enabled = false;
+        //give_water.GetComponent<Button>().enabled = false;
+        give_oil.gameObject.SetActive(false);
+
         given_oil = true;
 
         fire_place_ON = true;
     }
 
+    void stop_audio()
+    {
+        if (audio_source.isPlaying)
+        {
+            audio_source.Stop();
+        }
+    }
 
+    bool inTalking = false;
+    bool inDailyTasks = false;
     public void Talk()
     {
-        talk_button.GetComponent<Image>().enabled = false;
-        talk_button.GetComponent<Button>().enabled = false;
+        inTalking = true;
+        //talk_button.GetComponent<Image>().enabled = false;
+        //talk_button.GetComponent<Button>().enabled = false;
+        talk_button.gameObject.SetActive(false);
 
-        map_button.GetComponent<Image>().enabled = false;
-        map_button.GetComponent<Image>().enabled = false;
+        //map_button.GetComponent<Image>().enabled = false;
+        //map_button.GetComponent<Image>().enabled = false;
+        map_button.gameObject.SetActive(false);
 
-        daily_tasks_button.GetComponent<Image>().enabled = false;
-        daily_tasks_button.GetComponent<Button>().enabled = false;
+        //daily_tasks_button.GetComponent<Image>().enabled = false;
+        //daily_tasks_button.GetComponent<Button>().enabled = false;
+        daily_tasks_button.gameObject.SetActive(false);
 
-        what_happened_button.GetComponent<Image>().enabled = true;
-        what_happened_button.GetComponent<Button>().enabled = true;
+        //what_happened_button.GetComponent<Image>().enabled = true;
+        //what_happened_button.GetComponent<Button>().enabled = true;
+        what_happened_button.gameObject.SetActive(true);
 
-        survive_button.GetComponent<Image>().enabled = true;
-        survive_button.GetComponent<Image>().enabled = true;
+        //survive_button.GetComponent<Image>().enabled = true;
+        //survive_button.GetComponent<Image>().enabled = true;
+        survive_button.gameObject.SetActive(true);
 
-        dt_explanation_button.GetComponent<Image>().enabled = true;
-        dt_explanation_button.GetComponent<Image>().enabled = true;
+        //dt_explanation_button.GetComponent<Image>().enabled = true;
+        //dt_explanation_button.GetComponent<Image>().enabled = true;
+        dt_explanation_button.gameObject.SetActive(true);
 
-        back_button.GetComponent<Image>().enabled = true;
-        back_button.GetComponent<Image>().enabled = true;
+        //back_button.GetComponent<Image>().enabled = true;
+        //back_button.GetComponent<Image>().enabled = true;
+        back_button.gameObject.SetActive(true);
 
 
 
         conversation_level = 2;
 
     }
+    public void TellWhatHappened()
+    {
+        stop_audio();
 
+        audio_source.PlayOneShot(what_happened);
+    }
+    public void SurvivingTalk()
+    {
+        stop_audio();
+
+        audio_source.PlayOneShot(survive_audio);
+    }
     public void ShowMap()
     {
         if (day_count == 0)
@@ -269,20 +354,25 @@ public class conversation_logic : MonoBehaviour {
         if (day_count == 3)
             map_4.GetComponent<Image>().enabled = true;
 
-        talk_button.GetComponent<Image>().enabled = false;
-        talk_button.GetComponent<Button>().enabled = false;
+        //talk_button.GetComponent<Image>().enabled = false;
+        //talk_button.GetComponent<Button>().enabled = false;
+        talk_button.gameObject.SetActive(false);
 
-        map_button.GetComponent<Image>().enabled = false;
-        map_button.GetComponent<Image>().enabled = false;
+        //map_button.GetComponent<Image>().enabled = false;
+        //map_button.GetComponent<Image>().enabled = false;
+        map_button.gameObject.SetActive(false);
 
-        daily_tasks_button.GetComponent<Image>().enabled = false;
-        daily_tasks_button.GetComponent<Button>().enabled = false;
+        //daily_tasks_button.GetComponent<Image>().enabled = false;
+        //daily_tasks_button.GetComponent<Button>().enabled = false;
+        daily_tasks_button.gameObject.SetActive(false);
 
-        goodbye_button.GetComponent<Image>().enabled = false;
-        goodbye_button.GetComponent<Button>().enabled = false;
+        //goodbye_button.GetComponent<Image>().enabled = false;
+        //goodbye_button.GetComponent<Button>().enabled = false;
+        goodbye_button.gameObject.SetActive(false);
 
-        back_button.GetComponent<Image>().enabled = true;
-        back_button.GetComponent<Image>().enabled = true;
+        //back_button.GetComponent<Image>().enabled = true;
+        //back_button.GetComponent<Image>().enabled = true;
+        back_button.gameObject.SetActive(true);
 
         conversation_level = 2;
 
@@ -290,20 +380,26 @@ public class conversation_logic : MonoBehaviour {
 
     public void DailyTasks()
     {
-        talk_button.GetComponent<Image>().enabled = false;
-        talk_button.GetComponent<Button>().enabled = false;
+        inDailyTasks = true;
+        //talk_button.GetComponent<Image>().enabled = false;
+        //talk_button.GetComponent<Button>().enabled = false;
+        talk_button.gameObject.SetActive(false);
 
-        map_button.GetComponent<Image>().enabled = false;
-        map_button.GetComponent<Image>().enabled = false;
+        //map_button.GetComponent<Image>().enabled = false;
+        //map_button.GetComponent<Image>().enabled = false;
+        map_button.gameObject.SetActive(false);
 
-        daily_tasks_button.GetComponent<Image>().enabled = false;
-        daily_tasks_button.GetComponent<Button>().enabled = false;
+        //daily_tasks_button.GetComponent<Image>().enabled = false;
+        //daily_tasks_button.GetComponent<Button>().enabled = false;
+        daily_tasks_button.gameObject.SetActive(false);
 
-        goodbye_button.GetComponent<Image>().enabled = false;
-        goodbye_button.GetComponent<Button>().enabled = false;
+        //goodbye_button.GetComponent<Image>().enabled = false;
+        //goodbye_button.GetComponent<Button>().enabled = false;
+        goodbye_button.gameObject.SetActive(false);
 
-        back_button.GetComponent<Image>().enabled = true;
-        back_button.GetComponent<Image>().enabled = true;
+        //back_button.GetComponent<Image>().enabled = true;
+        //back_button.GetComponent<Button>().enabled = true;
+        back_button.gameObject.SetActive(true);
 
         enable_daily_tasks = true;
 
@@ -311,32 +407,37 @@ public class conversation_logic : MonoBehaviour {
 
         if (got_dirty_water == true)
         {
-            give_dirty_water.GetComponent<Image>().enabled = true;
-            give_dirty_water.GetComponent<Button>().enabled = true;
+            //give_dirty_water.GetComponent<Image>().enabled = true;
+            //give_dirty_water.GetComponent<Button>().enabled = true;
+            give_dirty_water.gameObject.SetActive(true);
         }
 
         if (got_water == true)
         {
-            give_water.GetComponent<Image>().enabled = true;
-            give_water.GetComponent<Button>().enabled = true;
+            //give_water.GetComponent<Image>().enabled = true;
+            //give_water.GetComponent<Button>().enabled = true;
+            give_water.gameObject.SetActive(true);
         }
 
         if (got_fruit == true)
         {
-            give_fruit.GetComponent<Image>().enabled = true;
-            give_fruit.GetComponent<Button>().enabled = true;
+            //give_fruit.GetComponent<Image>().enabled = true;
+            //give_fruit.GetComponent<Button>().enabled = true;
+            give_fruit.gameObject.SetActive(true);
         }
 
         if (got_fish == true)
         {
-            give_fish.GetComponent<Image>().enabled = true;
-            give_fish.GetComponent<Button>().enabled = true;
+            //give_fish.GetComponent<Image>().enabled = true;
+            //give_fish.GetComponent<Button>().enabled = true;
+            give_fish.gameObject.SetActive(true);
         }
 
         if (got_oil == true)
         {
-            give_oil.GetComponent<Image>().enabled = true;
-            give_oil.GetComponent<Button>().enabled = true;
+            //give_oil.GetComponent<Image>().enabled = true;
+            //give_oil.GetComponent<Button>().enabled = true;
+            give_oil.gameObject.SetActive(true);
 
         }
 
@@ -345,57 +446,112 @@ public class conversation_logic : MonoBehaviour {
 
     public void Back()
     {
+       
+
         if (conversation_level == 2)
         {
-            talk_button.GetComponent<Image>().enabled = true;
-            talk_button.GetComponent<Button>().enabled = true;
 
-            map_button.GetComponent<Image>().enabled = true;
-            map_button.GetComponent<Image>().enabled = true;
+            if(inDailyTasks)
+            {
 
-            daily_tasks_button.GetComponent<Image>().enabled = true;
-            daily_tasks_button.GetComponent<Button>().enabled = true;
+                give_water.gameObject.SetActive(false);
+                give_water.gameObject.SetActive(false);
+                give_fruit.gameObject.SetActive(false);
+                give_fish.gameObject.SetActive(false);
+                give_oil.gameObject.SetActive(false);
+                inDailyTasks = false;
 
-            what_happened_button.GetComponent<Image>().enabled = false;
-            what_happened_button.GetComponent<Button>().enabled = false;
+            }
 
-            survive_button.GetComponent<Image>().enabled = false;
-            survive_button.GetComponent<Image>().enabled = false;
+            if(inTalking)
+            {
+                stop_audio();
+               
+                dt_explanation_button.gameObject.SetActive(false);
+                survive_button.gameObject.SetActive(false);
+                what_happened_button.gameObject.SetActive(false);
+                inTalking = false;
 
-            dt_explanation_button.GetComponent<Image>().enabled = false;
-            dt_explanation_button.GetComponent<Image>().enabled = false;
+            }
+            //talk_button.GetComponent<Image>().enabled = true;
+            //talk_button.GetComponent<Button>().enabled = true;
 
-            back_button.GetComponent<Image>().enabled = false;
-            back_button.GetComponent<Image>().enabled = false;
+            talk_button.gameObject.SetActive(true);
 
-            goodbye_button.GetComponent<Image>().enabled = true;
-            goodbye_button.GetComponent<Button>().enabled = true;
+            //map_button.GetComponent<Image>().enabled = true;
+            //map_button.GetComponent<Image>().enabled = true;
 
-            give_water.GetComponent<Image>().enabled = false;
-            give_water.GetComponent<Button>().enabled = false;
+            map_button.gameObject.SetActive(true);
 
-            give_water.GetComponent<Image>().enabled = false;
-            give_water.GetComponent<Button>().enabled = false;
 
-            give_fruit.GetComponent<Image>().enabled = false;
-            give_fruit.GetComponent<Button>().enabled = false;
+            //daily_tasks_button.GetComponent<Image>().enabled = true;
+            //daily_tasks_button.GetComponent<Button>().enabled = true;
 
-            give_fish.GetComponent<Image>().enabled = false;
-            give_fish.GetComponent<Button>().enabled = false;
+            daily_tasks_button.gameObject.SetActive(true);
 
-            give_oil.GetComponent<Image>().enabled = false;
-            give_oil.GetComponent<Button>().enabled = false;
+             back_button.gameObject.SetActive(false);
+            //what_happened_button.GetComponent<Image>().enabled = false;
+            //what_happened_button.GetComponent<Button>().enabled = false;
+          
+
+
+
+            //survive_button.GetComponent<Image>().enabled = false;
+            //survive_button.GetComponent<Image>().enabled = false;
+
+
+            //dt_explanation_button.GetComponent<Image>().enabled = false;
+            //dt_explanation_button.GetComponent<Image>().enabled = false;
+
+          
+
+            //back_button.GetComponent<Image>().enabled = false;
+            //back_button.GetComponent<Image>().enabled = false;
+
+          
+
+            //goodbye_button.GetComponent<Image>().enabled = true;
+            //goodbye_button.GetComponent<Button>().enabled = true;
+
+            goodbye_button.gameObject.SetActive(true);
+
+
+            //give_water.GetComponent<Image>().enabled = false;
+            //give_water.GetComponent<Button>().enabled = false;
+
+         
+
+            //give_water.GetComponent<Image>().enabled = false;
+            //give_water.GetComponent<Button>().enabled = false;
+
+
+            //give_fruit.GetComponent<Image>().enabled = false;
+            //give_fruit.GetComponent<Button>().enabled = false;
+
+
+
+            //give_fish.GetComponent<Image>().enabled = false;
+            //give_fish.GetComponent<Button>().enabled = false;
+
+
+
+            //give_oil.GetComponent<Image>().enabled = false;
+            //give_oil.GetComponent<Button>().enabled = false;
+
+
+
         }
 
-            map_1.GetComponent<Image>().enabled = false;
-            map_2.GetComponent<Image>().enabled = false;
-            map_3.GetComponent<Image>().enabled = false;
-            map_4.GetComponent<Image>().enabled = false;
 
-            conversation_level = 1;
+        map_1.GetComponent<Image>().enabled = false;
+        map_2.GetComponent<Image>().enabled = false;
+        map_3.GetComponent<Image>().enabled = false;
+        map_4.GetComponent<Image>().enabled = false;
 
-            enable_daily_tasks = false;
-        
+        conversation_level = 1;
+
+        enable_daily_tasks = false;
+
 
     }
 
@@ -407,39 +563,49 @@ public class conversation_logic : MonoBehaviour {
       
         game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = true;
 
-        talk_button.GetComponent<Image>().enabled = false;
-        talk_button.GetComponent<Button>().enabled = false;
+        //talk_button.GetComponent<Image>().enabled = false;
+        //talk_button.GetComponent<Button>().enabled = false;
+        talk_button.gameObject.SetActive(false);
 
-        map_button.GetComponent<Image>().enabled = false;
-        map_button.GetComponent<Image>().enabled = false;
+        //map_button.GetComponent<Image>().enabled = false;
+        //map_button.GetComponent<Image>().enabled = false;
+        map_button.gameObject.SetActive(false);
 
-        daily_tasks_button.GetComponent<Image>().enabled = false;
-        daily_tasks_button.GetComponent<Button>().enabled = false;
+        //daily_tasks_button.GetComponent<Image>().enabled = false;
+        //daily_tasks_button.GetComponent<Button>().enabled = false;
+        daily_tasks_button.gameObject.SetActive(false);
 
-        goodbye_button.GetComponent<Image>().enabled = false;
-        goodbye_button.GetComponent<Button>().enabled = false;
+        //goodbye_button.GetComponent<Image>().enabled = false;
+        //goodbye_button.GetComponent<Button>().enabled = false;
+        goodbye_button.gameObject.SetActive(false);
 
-        give_water.GetComponent<Image>().enabled = false;
-        give_water.GetComponent<Button>().enabled = false;
+        //give_water.GetComponent<Image>().enabled = false;
+        //give_water.GetComponent<Button>().enabled = false;
+        give_water.gameObject.SetActive(false);
 
-        give_fruit.GetComponent<Image>().enabled = false;
-        give_fruit.GetComponent<Button>().enabled = false;
+        //give_fruit.GetComponent<Image>().enabled = false;
+        //give_fruit.GetComponent<Button>().enabled = false;
+        give_fruit.gameObject.SetActive(false);
 
-        give_fish.GetComponent<Image>().enabled = false;
-        give_fish.GetComponent<Button>().enabled = false;
+        //give_fish.GetComponent<Image>().enabled = false;
+        //give_fish.GetComponent<Button>().enabled = false;
+        give_fish.gameObject.SetActive(false);
 
-        give_oil.GetComponent<Image>().enabled = false;
-        give_oil.GetComponent<Button>().enabled = false;
+        //give_oil.GetComponent<Image>().enabled = false;
+        //give_oil.GetComponent<Button>().enabled = false;
+        give_oil.gameObject.SetActive(false);
 
-        what_happened_button.GetComponent<Image>().enabled = false;
-        what_happened_button.GetComponent<Button>().enabled = false;
+        //what_happened_button.GetComponent<Image>().enabled = false;
+        //what_happened_button.GetComponent<Button>().enabled = false;
+        what_happened_button.gameObject.SetActive(false);
 
-        survive_button.GetComponent<Image>().enabled = false;
-        survive_button.GetComponent<Button>().enabled = false;
+        //survive_button.GetComponent<Image>().enabled = false;
+        //survive_button.GetComponent<Button>().enabled = false;
+        survive_button.gameObject.SetActive(false);
 
-        dt_explanation_button.GetComponent<Image>().enabled = false;
-        dt_explanation_button.GetComponent<Button>().enabled = false;
-
+        //dt_explanation_button.GetComponent<Image>().enabled = false;
+        //dt_explanation_button.GetComponent<Button>().enabled = false;
+        dt_explanation_button.gameObject.SetActive(false);
     }
 
     //public setter functions
@@ -468,60 +634,100 @@ public class conversation_logic : MonoBehaviour {
         got_fish = true;
     }
 
-    void OnMouseEnter()
+ //   void OnMouseEnter()
+ //   {
+ //       //enables talk to david prompt
+		
+	//}
+
+
+
+    AudioClip randomGreetingClip
     {
-        //enables talk to david prompt
-		talk_to_david.GetComponent<Text> ().enabled = true;
-	}
 
-
-
-
+        get
+        {
+            AudioClip clipToReturn = null;
+            int random = 0;
+            random = Random.Range(0, 3);
+            switch (random)
+            {
+                case 0:
+                    clipToReturn = greet_david;
+                    break;
+                case 1:
+                    clipToReturn =  greet_david2;
+                    break;
+                case 2:
+                    clipToReturn = greet_david3;
+                    break;
+            }
+            return clipToReturn;
+        }
+    }
 
 	void OnMouseOver ()
     {
-		
-		if (Input.GetKeyDown (KeyCode.E))
+        if (Vector3.Distance(transform.position, game_manager.Instance.Player.transform.position) < 5)
         {
-            //disables talk to david text 
-            this.gameObject.GetComponent<BoxCollider>().enabled = false;
+            talk_to_david.GetComponent<Text>().enabled = true;
+            if (Input.GetKeyDown(KeyCode.E))
+            {
 
-            //toggles cursor off
-            // call_cursor_test.ToggleCursorState();
-            game_manager.Instance.scene_manager.TalkToDavid();
-            game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = false;
-            //disables player movement and mouselook
-            //  player.GetComponent<FirstPersonController>().enabled = false;
+                audio_source.PlayOneShot(randomGreetingClip);
+                //disables talk to david text 
+                gameObject.GetComponent<BoxCollider>().enabled = false;
 
-
-
-
-            //enables main conversation buttons
-            talk_button.GetComponent<Image> ().enabled = true;
-            talk_button.GetComponent<Button>().enabled = true;
-
-			map_button.GetComponent<Image> ().enabled = true;
-            map_button.GetComponent<Image>().enabled = true;
-
-			daily_tasks_button.GetComponent<Image> ().enabled = true;
-            daily_tasks_button.GetComponent<Button>().enabled = true;
-
-            goodbye_button.GetComponent<Image>().enabled = true;
-            goodbye_button.GetComponent<Button>().enabled = true;
+                //toggles cursor off
+                // call_cursor_test.ToggleCursorState();
+                game_manager.Instance.scene_manager.TalkToDavid();
+                game_manager.Instance.Player.GetComponent<FirstPersonController>().enabled = false;
+                //disables player movement and mouselook
+                //  player.GetComponent<FirstPersonController>().enabled = false;
 
 
-            //checks daily tasks buttons and enables them if you have the items
-            
 
+
+                //enables main conversation buttons
+                //talk_button.GetComponent<Image>().enabled = true;
+                //talk_button.GetComponent<Button>().enabled = true;
+
+                talk_button.gameObject.SetActive(true);
+
+                //map_button.GetComponent<Image>().enabled = true;
+                //map_button.GetComponent<Image>().enabled = true;
+
+                map_button.gameObject.SetActive(true);
+
+                //daily_tasks_button.GetComponent<Image>().enabled = true;
+                //daily_tasks_button.GetComponent<Button>().enabled = true;
+
+                daily_tasks_button.gameObject.SetActive(true);
+
+                //goodbye_button.GetComponent<Image>().enabled = true;
+                //goodbye_button.GetComponent<Button>().enabled = true;
+
+
+                goodbye_button.gameObject.SetActive(true);
+
+
+                //checks daily tasks buttons and enables them if you have the items
+
+
+            }
         }
-			
+        else
+        {
+            talk_to_david.GetComponent<Text>().enabled = false;
+        }
+       
 	}
 
-	void OnMouseExit ()
+    void OnMouseExit()
     {
         //disables talk to david prompt
-		talk_to_david.GetComponent<Text> ().enabled = false;
-	}
+        talk_to_david.GetComponent<Text>().enabled = false;
+    }
 
     //quits the application
     public void ApplicationQuit()

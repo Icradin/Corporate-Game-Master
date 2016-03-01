@@ -27,7 +27,7 @@ public class transition_manager : MonoBehaviour {
 		if (transition_array.Length == 0)
 			transition_array = GameObject.FindGameObjectsWithTag ("transition");
 
-		fade (false);
+		//fade (false);
 	}
 
 

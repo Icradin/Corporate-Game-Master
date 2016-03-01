@@ -90,7 +90,7 @@ public class ui_manager : MonoBehaviour {
 
             if (enteredSpring)
             {
-                water_bottle_ui.GetComponent<Image>().enabled = true;
+                water_bottle_ui.gameObject.SetActive(true);
                 david.GetComponent<conversation_logic>().SetWater();
                 david.GetComponent<conversation_logic>().ActionCount();
                 spring_collider.GetComponent<BoxCollider>().enabled = false;
@@ -104,7 +104,7 @@ public class ui_manager : MonoBehaviour {
 
             else if (enteredFruit)
             {
-                apple_ui.GetComponent<Image>().enabled = true;
+                apple_ui.gameObject.SetActive(true);
                 david.GetComponent<conversation_logic>().SetFruit();
                 david.GetComponent<conversation_logic>().ActionCount();
                 fruit_collider.GetComponent<BoxCollider>().enabled = false;
@@ -118,7 +118,7 @@ public class ui_manager : MonoBehaviour {
 
             else if (enteredFishing)
             {
-                fishing_ui.GetComponent<Image>().enabled = true;
+                fishing_ui.gameObject.SetActive(true);
                 david.GetComponent<conversation_logic>().SetFish();
                 david.GetComponent<conversation_logic>().ActionCount();
                 fish_collider.GetComponent<BoxCollider>().enabled = false;
@@ -132,7 +132,7 @@ public class ui_manager : MonoBehaviour {
 
             else if (enteredDirtyWater)
             {
-                water_bottle_ui.GetComponent<Image>().enabled = true;
+                water_bottle_ui.gameObject.SetActive(true);
                 david.GetComponent<conversation_logic>().SetDirtyWater();
                 david.GetComponent<conversation_logic>().ActionCount();
                 dirty_water_collider.GetComponent<BoxCollider>().enabled = false;

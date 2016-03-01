@@ -13,26 +13,40 @@ public class duct_tape_logic : MonoBehaviour {
 
     void OnMouseEnter()
     {
-        if (!game_manager.Instance.gotDuctTape)
+        if (Vector3.Distance(transform.position, game_manager.Instance.Player.transform.position) < 4)
         {
-            duct_tape_text.GetComponent<Text>().enabled = true;
+            if (!game_manager.Instance.gotDuctTape)
+            {
+                duct_tape_text.GetComponent<Text>().enabled = true;
 
+            }
         }
     }
 
 	void OnMouseOver(){
-		
-		if (Input.GetKeyDown (KeyCode.E) && !game_manager.Instance.gotDuctTape) {
-			tape_image.GetComponent <Image> ().enabled = true;
-			Destroy (gameObject);
-			duct_tape_text.GetComponent<Text> ().enabled = false;
-            game_manager.Instance.gotDuctTape = true;
-		}
+        if (Vector3.Distance(transform.position, game_manager.Instance.Player.transform.position) < 4)
+        {
+            if (Input.GetKeyDown(KeyCode.E) && !game_manager.Instance.gotDuctTape)
+            {
+               
+                tape_image.gameObject.SetActive(true);
+                Destroy(gameObject);
+                duct_tape_text.GetComponent<Text>().enabled = false;
+                game_manager.Instance.gotDuctTape = true;
+            }
+        }
+        else
+        {
+            duct_tape_text.GetComponent<Text>().enabled = false;
+        }
 			
 	}
 
 	void OnMouseExit (){
-		duct_tape_text.GetComponent<Text> ().enabled = false;
+        if (Vector3.Distance(transform.position, game_manager.Instance.Player.transform.position) < 4)
+        {
+            duct_tape_text.GetComponent<Text>().enabled = false;
+        }
 	}
 
 

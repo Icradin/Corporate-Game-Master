@@ -103,9 +103,10 @@ public class talk_boss : talk_base
         yield return new WaitForSeconds(audiolenght);
         transition_manager.instance.fade(true);
         yield return new WaitForSeconds(1);
-        transition_manager.instance.fade(false);
+
         game_over_screen.SetActive(true);
-        game_manager.Instance.scene_manager.SetState(GameState.InteractBarrel);
+        game_manager.Instance.scene_manager.SetState(GameState.InteractBarrel);//so we dont move , mouse move is enable , etc...
+                                                                                //using this one just for the fucntionality
         Debug.Log("gameover");
     }
 
