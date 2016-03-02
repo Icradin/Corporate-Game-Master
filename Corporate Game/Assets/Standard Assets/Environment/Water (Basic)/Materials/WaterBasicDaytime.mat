@@ -246,6 +246,10 @@ Material:
         second: {r: 1, g: 1, b: 0, a: 0}
       data:
         first:
+          name: _BumpMap_ST
+        second: {r: 1, g: 1, b: 0, a: 0}
+      data:
+        first:
           name: _WaveSpeed
         second: {r: 1, g: -1, b: -1, a: 1}
       data:
@@ -264,10 +268,6 @@ Material:
         first:
           name: _FoamColor
         second: {r: 0.3382353, g: 0.3456964, b: 0.3456964, a: 1}
-      data:
-        first:
-          name: _BumpMap_ST
-        second: {r: 1, g: 1, b: 0, a: 0}
       data:
         first:
           name: _RefrColor
