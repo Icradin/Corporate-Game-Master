@@ -113,10 +113,13 @@ public class fuel_can_logic : MonoBehaviour
         yield return new WaitForSeconds(1);
         audio_source.PlayOneShot(exit_talk);
         yield return new WaitForSeconds(exit_talk.length + 1);
+       
         transition_manager.instance.fade(true);
         yield return new WaitForSeconds(1);
-        transition_manager.instance.fade(false);
+        game_win_image.SetActive(false);
         loading_next_level.SetActive(true);
+        transition_manager.instance.fade(false);
+        
         yield return new WaitForSeconds(2);
         transition_manager.instance.fade(true);
         OfficeLevel();
