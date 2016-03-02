@@ -11,14 +11,14 @@ public class conversation_logic : MonoBehaviour {
 	public GameObject player, talk_to_david, tent_collider,
         water_collider, dirty_water_collider, fruit_collider, fish_collider, oil_collider, camp_fire;
     
-	public Button talk_button, map_button, daily_tasks_button, goodbye_button, 
-        back_button, what_happened_button, survive_button, dt_explanation_button,
+	public GameObject talk_button, map_button, daily_tasks_button, goodbye_button, 
+        back_button, what_happened_button, survive_button,
         give_water, give_fruit, give_fish, give_oil, give_dirty_water;
 
     public bool got_dirty_water = false, got_water = false, got_fruit = false, got_fish = false, got_oil = false;
 
     // daily tasks inventory images
-    public Image inventory_water, inventory_fruit, inventory_fish, inventory_oil, map_1, map_2, map_3, map_4;
+    public GameObject inventory_water, inventory_fruit, inventory_fish, inventory_oil, map_1, map_2, map_3, map_4;
 
     float health_timer, hydration_timer, hunger_timer, moralle_timer;
 
@@ -31,9 +31,8 @@ public class conversation_logic : MonoBehaviour {
   
     //day and actions
     private int day_count = 0, action_count = 2, conversation_level = 1;
-   
-    private bool enable_daily_tasks = false, given_oil;
-    
+
+    private bool enable_daily_tasks = false;
   
 
     private ui_manager ui_manager;
@@ -62,10 +61,10 @@ public class conversation_logic : MonoBehaviour {
     void Start()
     {
         ui_manager = FindObjectOfType<ui_manager>();
-        inventory_water = inventory_water.GetComponent<Image>();
-        inventory_fruit = inventory_fruit.GetComponent<Image>();
-        inventory_fish = inventory_fish.GetComponent<Image>();
-        inventory_oil = inventory_oil.GetComponent<Image>();
+        //inventory_water = inventory_water.GetComponent<Image>();
+        //inventory_fruit = inventory_fruit.GetComponent<Image>();
+        //inventory_fish = inventory_fish.GetComponent<Image>();
+        //inventory_oil = inventory_oil.GetComponent<Image>();
 
         // ParticleSystem camp_particles = camp_fire.GetComponent<ParticleSystem>();
         camp_fire.GetComponent<ParticleSystem>().Stop();
@@ -84,13 +83,7 @@ public class conversation_logic : MonoBehaviour {
             //key_light_1.intensity = 0.1f;
             //key_light_1.intensity = 0.1f;
 
-            if (given_oil)
-            {
-                camp_fire.GetComponent<ParticleSystem>().Play();
-                camp_fire.GetComponentInChildren<ParticleSystem>().Play();
-                fire_place_ON = true;
-
-            }
+           
         }
 
         if (action_count == 1)
@@ -182,7 +175,7 @@ public class conversation_logic : MonoBehaviour {
         oil_collider.GetComponent<MeshCollider>().enabled = true;
         tent_collider.GetComponent<BoxCollider>().enabled = false;
         KillingPeople();
-
+        StartCoroutine("change_time");
 
     }
     //Button Functions
@@ -194,7 +187,7 @@ public class conversation_logic : MonoBehaviour {
 
         ui_manager.IncreaseHydration();
 
-        inventory_water.enabled = false;
+        inventory_water.SetActive(false);
         got_dirty_water = false;
         got_water = false;
         //give_water.GetComponent<Image>().enabled = false;
@@ -216,7 +209,7 @@ public class conversation_logic : MonoBehaviour {
         ui_manager.IncreaseHydration();
         ui_manager.DecreaseHealth();
 
-        inventory_water.enabled = false;
+        inventory_water.SetActive(false);
         got_dirty_water = false;
         got_water = false;
         //give_dirty_water.GetComponent<Image>().enabled = false;
@@ -239,7 +232,7 @@ public class conversation_logic : MonoBehaviour {
 
         ui_manager.IncreaseHunger();
 
-        inventory_fruit.enabled = false;
+        inventory_fruit.SetActive(false);
         got_fruit = false;
         //give_fruit.GetComponent<Image>().enabled = false;
         //give_fruit.GetComponent<Button>().enabled = false;
@@ -257,7 +250,7 @@ public class conversation_logic : MonoBehaviour {
         ui_manager.IncreaseHunger();
         ui_manager.DecreaseHealth();
 
-        inventory_fish.enabled = false;
+        inventory_fish.SetActive(false);
         got_fish = false;
         //give_fish.GetComponent<Image>().enabled = false;
         //give_fish.GetComponent<Button>().enabled = false;
@@ -273,18 +266,35 @@ public class conversation_logic : MonoBehaviour {
         stop_audio();
         audio_source.PlayOneShot(gave_oil);
 
-        inventory_oil.enabled = false;
-        
+        inventory_oil.SetActive(false);
+
         got_oil = false;
         //give_oil.GetComponent<Image>().enabled = false;
         //give_water.GetComponent<Button>().enabled = false;
         give_oil.gameObject.SetActive(false);
 
-        given_oil = true;
 
-        fire_place_ON = true;
+        activate_fire(true);
+
+        
     }
+    public void activate_fire(bool active)
+    {
+        if(active)
+        {
 
+            camp_fire.GetComponent<ParticleSystem>().Play();
+            camp_fire.GetComponentInChildren<ParticleSystem>().Play();
+            fire_place_ON = true;
+        }
+        else
+        {
+
+            camp_fire.GetComponent<ParticleSystem>().Stop();
+            camp_fire.GetComponentInChildren<ParticleSystem>().Stop();
+            fire_place_ON = false;
+        }
+    }
     void stop_audio()
     {
         if (audio_source.isPlaying)
@@ -320,7 +330,7 @@ public class conversation_logic : MonoBehaviour {
 
         //dt_explanation_button.GetComponent<Image>().enabled = true;
         //dt_explanation_button.GetComponent<Image>().enabled = true;
-        dt_explanation_button.gameObject.SetActive(true);
+        //dt_explanation_button.gameObject.SetActive(true);
 
         //back_button.GetComponent<Image>().enabled = true;
         //back_button.GetComponent<Image>().enabled = true;
@@ -454,7 +464,7 @@ public class conversation_logic : MonoBehaviour {
             if(inDailyTasks)
             {
 
-                give_water.gameObject.SetActive(false);
+                give_dirty_water.gameObject.SetActive(false);
                 give_water.gameObject.SetActive(false);
                 give_fruit.gameObject.SetActive(false);
                 give_fish.gameObject.SetActive(false);
@@ -467,7 +477,7 @@ public class conversation_logic : MonoBehaviour {
             {
                 stop_audio();
                
-                dt_explanation_button.gameObject.SetActive(false);
+                //dt_explanation_button.gameObject.SetActive(false);
                 survive_button.gameObject.SetActive(false);
                 what_happened_button.gameObject.SetActive(false);
                 inTalking = false;
@@ -605,7 +615,7 @@ public class conversation_logic : MonoBehaviour {
 
         //dt_explanation_button.GetComponent<Image>().enabled = false;
         //dt_explanation_button.GetComponent<Button>().enabled = false;
-        dt_explanation_button.gameObject.SetActive(false);
+       // dt_explanation_button.gameObject.SetActive(false);
     }
 
     //public setter functions

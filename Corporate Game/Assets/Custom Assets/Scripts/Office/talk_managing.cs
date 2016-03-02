@@ -16,7 +16,7 @@ public class talk_managing : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	    
+        transition_manager.instance.fade(false);
 	}
 	
 	// Update is called once per frame

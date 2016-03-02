@@ -42,11 +42,13 @@ public class ui_manager : MonoBehaviour {
     bool enteredDirtyWater = false;
     bool enteredSleep = false;
 
+    conversation_logic conversation_logic;
 
 
     void Start()
     {
         player_stats = GetComponent<player_stats>();
+        conversation_logic = david.GetComponent<conversation_logic>();
         if (player_stats == null) print(" ERROR !! --- Attach => player_stats script <=  to player !");
         image_offset = player_stats.image_offset;
     }
@@ -91,8 +93,8 @@ public class ui_manager : MonoBehaviour {
             if (enteredSpring)
             {
                 water_bottle_ui.gameObject.SetActive(true);
-                david.GetComponent<conversation_logic>().SetWater();
-                david.GetComponent<conversation_logic>().ActionCount();
+                conversation_logic.SetWater();
+                conversation_logic.ActionCount();
                 spring_collider.GetComponent<BoxCollider>().enabled = false;
                 spring_text.GetComponent<Text>().enabled = false;
                 dirty_water_collider.GetComponent<BoxCollider>().enabled = false;
@@ -105,8 +107,8 @@ public class ui_manager : MonoBehaviour {
             else if (enteredFruit)
             {
                 apple_ui.gameObject.SetActive(true);
-                david.GetComponent<conversation_logic>().SetFruit();
-                david.GetComponent<conversation_logic>().ActionCount();
+                conversation_logic.SetFruit();
+                conversation_logic.ActionCount();
                 fruit_collider.GetComponent<BoxCollider>().enabled = false;
                 fruit_text.GetComponent<Text>().enabled = false;
                 Invoke("DecreseStatsOnAction", 2.0f);
@@ -119,8 +121,8 @@ public class ui_manager : MonoBehaviour {
             else if (enteredFishing)
             {
                 fishing_ui.gameObject.SetActive(true);
-                david.GetComponent<conversation_logic>().SetFish();
-                david.GetComponent<conversation_logic>().ActionCount();
+                conversation_logic.SetFish();
+                conversation_logic.ActionCount();
                 fish_collider.GetComponent<BoxCollider>().enabled = false;
                 fishing_text.GetComponent<Text>().enabled = false;
                 Invoke("DecreseStatsOnAction", 2.0f);
@@ -133,8 +135,8 @@ public class ui_manager : MonoBehaviour {
             else if (enteredDirtyWater)
             {
                 water_bottle_ui.gameObject.SetActive(true);
-                david.GetComponent<conversation_logic>().SetDirtyWater();
-                david.GetComponent<conversation_logic>().ActionCount();
+                conversation_logic.SetDirtyWater();
+                conversation_logic.ActionCount();
                 dirty_water_collider.GetComponent<BoxCollider>().enabled = false;
                 dirty_water_text.GetComponent<Text>().enabled = false;
                 spring_collider.GetComponent<BoxCollider>().enabled = false;
@@ -146,11 +148,11 @@ public class ui_manager : MonoBehaviour {
 
             else if (enteredSleep)
             {
-                
-                david.GetComponent<conversation_logic>().ResetActions();
+
+                conversation_logic.ResetActions();
                 tent_collider.GetComponent<BoxCollider>().enabled = false;
                 sleeping_text.GetComponent<Text>().enabled = false;
-                if (!david.GetComponent<conversation_logic>().fire_place_ON)
+                if (!conversation_logic.fire_place_ON)
                 {
                     Invoke("DecreaseMorale", 2.0f);
                     print("Morale has been decreased ( fire not ON when sleeping)");
@@ -158,9 +160,11 @@ public class ui_manager : MonoBehaviour {
                 else
                 {
                     Invoke("IncreaseMorale", 2.0f);
+                    print("Morale has been increased (fire on when sleeping)");
                 }
                 print("SLEEEEP");
                 enteredSleep = false;
+                conversation_logic.activate_fire(false);
 
             }
         }
